@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,23 +18,28 @@
         min-height: 100vh;
         overflow: hidden;
         animation: backgroundColorFade 15s infinite alternate ease-in-out;
+        position: relative;
     }
+
     @keyframes backgroundColorFade {
         0% { background: linear-gradient(135deg, #b2fefa, #0ed2f7); }
         33% { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
         66% { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
         100% { background: linear-gradient(135deg, #b2fefa, #0ed2f7); }
     }
+
     h1 {
         color: #2a4d69;
         font-size: 2.5rem;
         margin-bottom: 20px;
     }
+
     h2 {
         color: #333;
         font-size: 1.8rem;
         margin-bottom: 30px;
     }
+
     .game-container {
         display: flex;
         flex-direction: column;
@@ -44,11 +48,13 @@
         gap: 20px;
         width: 80%;
     }
+
     .character-boxes {
         display: flex;
         justify-content: space-around;
         width: 100%;
     }
+
     .character-box {
         width: 40%;
         padding: 20px;
@@ -60,6 +66,7 @@
         font-size: 1.2rem;
         line-height: 1.6;
     }
+
     .middle-info {
         padding: 20px;
         border: 2px solid #ff9a9e;
@@ -71,6 +78,7 @@
         line-height: 1.8;
         width: 60%;
     }
+
     button {
         background-color: #0ed2f7;
         color: #ffffff;
@@ -81,91 +89,165 @@
         cursor: pointer;
         transition: all 0.3s ease-in-out;
     }
+
     button:hover {
         background-color: #06b1d1;
         transform: scale(1.05);
     }
+
+    /* Floating lights/particles */
+    .particle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: floatParticles 8s ease-in-out infinite;
+    }
+
+    @keyframes floatParticles {
+        0% {
+            opacity: 0.5;
+            transform: translate(0, 0) scale(1);
+        }
+        50% {
+            opacity: 1;
+            transform: translate(50px, -50px) scale(1.2);
+        }
+        100% {
+            opacity: 0.5;
+            transform: translate(-50px, 50px) scale(0.8);
+        }
+    }
+
+    /* Mouse tracking */
+    .particle:hover {
+        animation-play-state: paused;
+    }
+
 </style>
 </head>
 <body>
 <h1>Welcome to Gay Wars</h1>
-<h2>generate a battle</h2>
+<h2>Generate a Battle</h2>
 <div class="game-container">
     <div class="character-boxes">
         <div id="character1-box" class="character-box">character 1</div>
         <div id="character2-box" class="character-box">character 2</div>
     </div>
     <div id="middle-info" class="middle-info">
-        environment and competition
+        Environment and Competition
     </div>
 </div>
 <button onclick="generateScenario()">Generate Scenario</button>
+
+<!-- Floating Lights/Particles -->
 <script>
-// Data arrays
-const characterCards = [
-    "Mason", "Shunty", "Precious", "Uh...Matty", "Farnold", "Belb", "James Charles",
-    "Trisha Paytas", "a squad of cockroaches", "hummingbird", "pizza delivery guy", "Steven Hawking",
-    "Serena Williams", "LeBron James", "SpongeBob", "Matt (black bald Wii man)", "Gnome on Shrooms",
-    "Jungkook", "Pterodactyl", "Katniss Everdeen", "Boss Baby", "Shartiqua", "A Pebble",
-    "Hello Kitty", "Deadpool", "The Rock", "Cooking Mama", "Finance Bro", "Megamind",
-    "Thor", "Gordon Ramsey", "Spoiled Kid", "DJ Khaled", "Gym Bro", "Hulk",
-    "Adam Sandler", "Princess Peach", "Shrek", "Pennywise", "Keanu Reeves", "John Cena",
-    "The KoolAid Man", "Mr. Clean", "Napoleon Bonaparte", "Elon Musk", "Forest Gump"
-];
+    // Create floating particles
+    function createParticles() {
+        const numberOfParticles = 30; // Number of particles
+        const body = document.body;
 
-const descriptiveCards = [
-    "white", "black", "lesbian", "Hispanic", "4 ft tall", "has an extra nipple", "medusa hair",
-    "gills", "can summon rain storms", "pees out of their pinky finger", "can only crawl",
-    "made out of Legos", "contagious autism", "really good at throwing cards", "just got out of rehab",
-    "on shrooms", "can knock people out with their farts", "8 ft tall", "if they were from the Stone Age",
-    "can fly with coochie flappers", "can birth an AK-47 rifle", "breastmilk elixir of life",
-    "morbidly obese", "gay on command", "missing its big toe", "can sing and eat simultaneously",
-    "master of networking", "beautiful", "Rubik's Cube Fanatic", "skips everywhere",
-    "can solve your calculus III problems", "ultimate gaslighter", "can eat raw chicken",
-    "adopted by Nigerian homophobics", "flamboyant as heck", "can majestically whip and nae nae"
-];
+        for (let i = 0; i < numberOfParticles; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.top = `${Math.random() * 100}vh`;
+            particle.style.left = `${Math.random() * 100}vw`;
+            body.appendChild(particle);
+        }
+    }
 
-const environments = [
-    "Body Building", "Inside a Wormhole", "Hot Pepper Eating Contest", 
-    "Super Smash Brawl Arena", "Patrick's Rock Home", "Inside a Watermelon", "Barbie's Home",
-    "Vacant Office Room", "Parking Garage", "Hogwarts", "Gay Club", "Cheesecake Factory",
-    "Cooking Mama's Kitchen", "Karaoke Room", "Strip Club", "The Batmobile"
-];
+    createParticles();
 
-const competitions = [
-    "Dance Battle", "Try Not to Kiss Challenge", "Hunger Games", "Hot Dog Eating",
-    "Try Not to Cringe", "40-Yard Dash", "Solve the Rubik's Cube", "Wii Tennis",
-    "Mass Eating", "Who Would Make a More Viral Thirst Trap", "Survive a Zombie Apocalypse",
-    "Would Not Crack Under Interrogation", "Trivia", "Karaoke"
-];
+    // Particle follow mouse
+    document.addEventListener('mousemove', (event) => {
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(particle => {
+            const mouseX = event.pageX;
+            const mouseY = event.pageY;
 
-// Function to generate a random scenario ensuring no duplicate cards
-function generateScenario() {
-    const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
+            const particleX = particle.offsetLeft;
+            const particleY = particle.offsetTop;
 
-    // Ensure unique characters and descriptions
-    let char1Index, char2Index, desc1Index, desc2Index;
-    do {
-        char1Index = getRandomIndex(characterCards);
-        char2Index = getRandomIndex(characterCards);
-    } while (char1Index === char2Index);
+            const dx = mouseX - particleX;
+            const dy = mouseY - particleY;
 
-    do {
-        desc1Index = getRandomIndex(descriptiveCards);
-        desc2Index = getRandomIndex(descriptiveCards);
-    } while (desc1Index === desc2Index);
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-    const character1 = characterCards[char1Index];
-    const character2 = characterCards[char2Index];
-    const descriptive1 = descriptiveCards[desc1Index];
-    const descriptive2 = descriptiveCards[desc2Index];
-    const environment = environments[getRandomIndex(environments)];
-    const competition = competitions[getRandomIndex(competitions)];
+            const speed = 0.1; // speed of particles
+            const moveX = dx * speed;
+            const moveY = dy * speed;
 
-    document.getElementById("character1-box").innerHTML = `${character1} (${descriptive1})`;
-    document.getElementById("character2-box").innerHTML = `${character2} (${descriptive2})`;
-    document.getElementById("middle-info").innerHTML = `Environment: ${environment}<br>Competition: ${competition}`;
-}
+            particle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    });
+
+    // Data arrays
+    const characterCards = [
+        "Mason", "Shunty", "Precious", "Uh...Matty", "Farnold", "Belb", "James Charles",
+        "Trisha Paytas", "a squad of cockroaches", "hummingbird", "pizza delivery guy", "Steven Hawking",
+        "Serena Williams", "LeBron James", "SpongeBob", "Matt (black bald Wii man)", "Gnome on Shrooms",
+        "Jungkook", "Pterodactyl", "Katniss Everdeen", "Boss Baby", "Shartiqua", "A Pebble",
+        "Hello Kitty", "Deadpool", "The Rock", "Cooking Mama", "Finance Bro", "Megamind",
+        "Thor", "Gordon Ramsey", "Spoiled Kid", "DJ Khaled", "Gym Bro", "Hulk",
+        "Adam Sandler", "Princess Peach", "Shrek", "Pennywise", "Keanu Reeves", "John Cena",
+        "The KoolAid Man", "Mr. Clean", "Napoleon Bonaparte", "Elon Musk", "Forest Gump"
+    ];
+
+    const descriptiveCards = [
+        "white", "black", "lesbian", "Hispanic", "4 ft tall", "has an extra nipple", "medusa hair",
+        "gills", "can summon rain storms", "pees out of their pinky finger", "can only crawl",
+        "made out of Legos", "contagious autism", "really good at throwing cards", "just got out of rehab",
+        "on shrooms", "can knock people out with their farts", "8 ft tall", "if they were from the Stone Age",
+        "can fly with coochie flappers", "can birth an AK-47 rifle", "breastmilk elixir of life",
+        "morbidly obese", "gay on command", "missing its big toe", "can sing and eat simultaneously",
+        "master of networking", "beautiful", "Rubik's Cube Fanatic", "skips everywhere",
+        "can solve your calculus III problems", "ultimate gaslighter", "can eat raw chicken",
+        "adopted by Nigerian homophobics", "flamboyant as heck", "can majestically whip and nae nae"
+    ];
+
+    const environments = [
+        "Body Building", "Inside a Wormhole", "Hot Pepper Eating Contest", 
+        "Super Smash Brawl Arena", "Patrick's Rock Home", "Inside a Watermelon", "Barbie's Home",
+        "Vacant Office Room", "Parking Garage", "Hogwarts", "Gay Club", "Cheesecake Factory",
+        "Cooking Mama's Kitchen", "Karaoke Room", "Strip Club", "The Batmobile"
+    ];
+
+    const competitions = [
+        "Dance Battle", "Try Not to Kiss Challenge", "Hunger Games", "Hot Dog Eating",
+        "Try Not to Cringe", "40-Yard Dash", "Solve the Rubik's Cube", "Wii Tennis",
+        "Mass Eating", "Who Would Make a More Viral Thirst Trap", "Survive a Zombie Apocalypse",
+        "Would Not Crack Under Interrogation", "Trivia", "Karaoke"
+    ];
+
+    // Function to generate a random scenario ensuring no duplicate cards
+    function generateScenario() {
+        const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
+
+        // Ensure unique characters and descriptions
+        let char1Index, char2Index, desc1Index, desc2Index;
+        do {
+            char1Index = getRandomIndex(characterCards);
+            char2Index = getRandomIndex(characterCards);
+        } while (char1Index === char2Index);
+
+        do {
+            desc1Index = getRandomIndex(descriptiveCards);
+            desc2Index = getRandomIndex(descriptiveCards);
+        } while (desc1Index === desc2Index);
+
+        const character1 = characterCards[char1Index];
+        const character2 = characterCards[char2Index];
+        const descriptive1 = descriptiveCards[desc1Index];
+        const descriptive2 = descriptiveCards[desc2Index];
+        const environment = environments[getRandomIndex(environments)];
+        const competition = competitions[getRandomIndex(competitions)];
+
+        document.getElementById("character1-box").innerHTML = `${character1} (${descriptive1})`;
+        document.getElementById("character2-box").innerHTML = `${character2} (${descriptive2})`;
+        document.getElementById("middle-info").innerHTML = `Environment: ${environment}<br>Competition: ${competition}`;
+    }
 </script>
 </body>
 </html>
