@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gay Wars</title>
     <style>
         body {
@@ -17,43 +17,17 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
-            animation: backgroundColorFade 15s infinite alternate ease-in-out;
-            position: relative;
         }
-        
-        @keyframes backgroundColorFade {
-            0% { background: linear-gradient(135deg, #b2fefa, #0ed2f7); }
-            33% { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
-            66% { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
-            100% { background: linear-gradient(135deg, #b2fefa, #0ed2f7); }
-        }
-
-        /* Floating interactive particles */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.7);
-            animation: float 10s linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(100vw, 100vh, 0); }
-        }
-
-        /* Centered game content */
         h1 {
             color: #2a4d69;
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
-
         h2 {
             color: #333;
             font-size: 1.8rem;
             margin-bottom: 30px;
         }
-
         .game-container {
             display: flex;
             flex-direction: column;
@@ -61,16 +35,12 @@
             justify-content: center;
             gap: 20px;
             width: 80%;
-            position: relative;
-            z-index: 10; /* Make sure game elements stay on top */
         }
-
         .character-boxes {
             display: flex;
             justify-content: space-around;
             width: 100%;
         }
-
         .character-box {
             width: 40%;
             padding: 20px;
@@ -82,7 +52,6 @@
             font-size: 1.2rem;
             line-height: 1.6;
         }
-
         .middle-info {
             padding: 20px;
             border: 2px solid #ff9a9e;
@@ -94,7 +63,6 @@
             line-height: 1.8;
             width: 60%;
         }
-
         button {
             background-color: #0ed2f7;
             color: #ffffff;
@@ -105,7 +73,6 @@
             cursor: pointer;
             transition: all 0.3s ease-in-out;
         }
-
         button:hover {
             background-color: #06b1d1;
             transform: scale(1.05);
@@ -113,58 +80,87 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to Gay Wars</h1>
-    <h2>Generate a Battle</h2>
-    <div class="game-container">
-        <div class="character-boxes">
-            <div id="character1-box" class="character-box">character 1</div>
-            <div id="character2-box" class="character-box">character 2</div>
-        </div>
-        <div id="middle-info" class="middle-info">
-            Environment and Competition
-        </div>
+<h1>Welcome to Gay Wars</h1>
+<h2>Generate a Battle</h2>
+<div class="game-container">
+    <div class="character-boxes">
+        <div id="character1-box" class="character-box">Character 1</div>
+        <div id="character2-box" class="character-box">Character 2</div>
     </div>
-    <button onclick="generateScenario()">Generate Scenario</button>
+    <div id="middle-info" class="middle-info">
+        Environment and Competition
+    </div>
+</div>
+<button onclick="generateScenario()">Generate Scenario</button>
 
-    <!-- Floating interactive particles -->
-    <script>
-        // Data arrays
-        const characterCards = [
-            "Mason", "Shunty", "Precious", "Uh...Matty", "Farnold", "Belb", "James Charles",
-            "Trisha Paytas", "a squad of cockroaches", "hummingbird", "pizza delivery guy", "Steven Hawking",
-            "Serena Williams", "LeBron James", "SpongeBob", "Matt (black bald Wii man)", "Gnome on Shrooms",
-            "Jungkook", "Pterodactyl", "Katniss Everdeen", "Boss Baby", "Shartiqua", "A Pebble",
-            "Hello Kitty", "Deadpool", "The Rock", "Cooking Mama", "Finance Bro", "Megamind",
-            "Thor", "Gordon Ramsey", "Spoiled Kid", "DJ Khaled", "Gym Bro", "Hulk",
-            "Adam Sandler", "Princess Peach", "Shrek", "Pennywise", "Keanu Reeves", "John Cena",
-            "The KoolAid Man", "Mr. Clean", "Napoleon Bonaparte", "Elon Musk", "Forest Gump"
-        ];
+<script>
+// Arrays of game elements
+const characterCards = [
+    "Mason", "Shunty", "Precious", "Uh...Matty", "Farnold", "Belb", "Hitler", "James Charles",
+    "Trisha Paytas", "A squad of cockroaches", "Hummingbird", "Pizza delivery guy", "Steven Hawking",
+    "Serena Williams", "LeBron James", "SpongeBob", "Matt (black bald Wii man)", "Gnome", "Jungkook", 
+    "Pterodactyl", "Katniss Everdeen", "Gay N-word (Lyon)", "Boss Baby", "Shartiqua", "A Pebble",
+    "Jeffrey Dahmer", "Trump", "Biden", "Deryk", "Hello Kitty", "Sonny Angel", "Smiski", "Deadpool", 
+    "The Rock", "Cooking Mama", "Finance Bro", "6ft nonchalant dreadhead", "Gru from Despicable Me", 
+    "Your Average Black Guy", "Megamind", "Small Asian Child from Shein Factory", "Thor", "Gordan Ramsey", 
+    "Asian Nerd", "Spoiled Kid", "DJ Khaled", "A Midget", "Ry (Ryley)", "Gym Bro", "The Person on Your Left", 
+    "Hulk", "Adam Sandler", "Berries and Cream Man", "Vector (Despicable Me)", "Majestic Squidward", 
+    "Jacob Elordi", "Gretchen Weener", "2 Objectively Unattractive Individuals", "Princess Peach", 
+    "Iggy Azalea", "Daddy", "Greasy CS Student", "Karen", "Katniss Everdeen", "Bella Swan", "Shrek", 
+    "Pennywise", "Keanu Reeves", "Voldemort", "Napoleon Bonaparte", "John Cena", "The KoolAid Man", 
+    "Mr. Clean", "Mew 2", "A Literal Pile of Laundry with Feelings", "Elon Musk", "Forest Gump"
+];
 
-        const descriptiveCards = [
-            "white", "black", "lesbian", "Hispanic", "4 ft tall", "has an extra nipple", "medusa hair",
-            "gills", "can summon rain storms", "pees out of their pinky finger", "can only crawl",
-            "made out of Legos", "contagious autism", "really good at throwing cards", "just got out of rehab",
-            "on shrooms", "can knock people out with their farts", "8 ft tall", "if they were from the Stone Age",
-            "can fly with coochie flappers", "can birth an AK-47 rifle", "breastmilk elixir of life",
-            "morbidly obese", "gay on command", "missing its big toe", "can sing and eat simultaneously",
-            "master of networking", "beautiful", "Rubik's Cube Fanatic", "skips everywhere",
-            "can solve your calculus III problems", "ultimate gaslighter", "can eat raw chicken",
-            "adopted by Nigerian homophobics", "flamboyant as heck", "can majestically whip and nae nae"
-        ];
+const descriptiveCards = [
+    "white", "black", "lesbian", "hispanic", "4 ft tall", "has an extra nipple", "medusa hair", "gills", 
+    "can summon rain storms", "pees out of their pinky finger", "can only crawl", "made out of legos", 
+    "can shit themself on command", "contagious autism", "really good at throwing cards", "just got out of rehab", 
+    "has a hentai addiction", "on shrooms", "can knock ppl out with their farts", "8 ft tall", "if they were from the stone age", 
+    "can fly with its coochie flappers", "can birth an AK-47 rifle (must have sex and takes 9 months)", 
+    "breastmilk elixir of life", "can produce rapid knee sweat", "mukbang master", "morbidly obese", 
+    "only attracted to little boys", "Gay on command", "Missing its big toe", "Can sing and eat simultaneously", 
+    "Can converse with cockroaches", "Master of Networking", "only eats raw meat", "cannibal", "is beautiful", 
+    "So Sussy Baka", "Litty", "A little bitch", "addicted to testosterone", "can't spell anything properly", 
+    "Rubik's Cube Fanatic", "skips everywhere", "Can solve your calculus III problems", "Can poop out swiss army knives", 
+    "Can club until 8am", "Can Cook a Beef Wellington", "can say the alphabet backwards", 
+    "Special Needs and can draw logos based off of memory", "ultimate gaslighter", "Can regurgitate HotDogs from mouth", 
+    "can eat raw chicken", "adopted by Nigerian homophobics", "Can rock climb virtually anywhere", "can stay awake during a Online Class", 
+    "has herpes", "queer on Tuesdays", "Flamboyant as fuck", "commits elderly rape", "Can majestically Whip and NaeNae", 
+    "Has Terminal diabetes", "Constantly vapes", "Completing the 100 layer nail polish is its only personality", 
+    "has a deviated septum", "has stage 3 ear cancer", "Can fly by queefing", "has breast tumors", 
+    "Hemmorhoids that turn into gold nuggets", "Smells like body odor", "Has abnormally strong toe muscles", 
+    "Ghetto", "Cannot fight the urge to body shame", "a whore for anything that is the color purple", 
+    "likes fish-flavored ice cream", "Gluten Intolerant", "Lactose intolerant", "Only wears gucci", 
+    "whole family is addicted to heroin", "can accurately distinguish Asians", "Is always drunk"
+];
 
-        const environments = [
-            "Body Building", "Inside a Wormhole", "Hot Pepper Eating Contest", 
-            "Super Smash Brawl Arena", "Patrick's Rock Home", "Inside a Watermelon", "Barbie's Home",
-            "Vacant Office Room", "Parking Garage", "Hogwarts", "Gay Club", "Cheesecake Factory",
-            "Cooking Mama's Kitchen", "Karaoke Room", "Strip Club", "The Batmobile"
-        ];
+const environments = [
+    "Space", "Inside a wormhole", "John Wayne Gacy's crawl space", "Super Smash Brawl Arena", 
+    "Patrick's Rock Home", "Inside a watermelon", "Barbie's Home", "Vacant Office Room", "Gay Club", 
+    "Cheesecake Factory", "Cooking Mama's Kitchen", "Trisha Paytas' shower", "The 3 Pieces of Korea's residence", 
+    "Itaewon Pocha", "The Vessel", "Karaoke Room", "Strip club", "Batmobile", "Farmland", "Airplane", 
+    "Train", "Upside down", "In a cave", "Tilting Towers", "Magic School Bus", "Chinese Sweat Shop", "9/11", 
+    "The Pentagon", "A beach", "This room", "In a tree", "Mickey Mouse Clubhouse", "Jurassic Park", 
+    "Haunted House", "Minecraft World", "Desert", "Willy Wonka's Chocolate Factory", "Top of Mount Everest", 
+    "Graveyard", "Chernobyl", "The White House", "Moon", "Inside a giant fish tank", "Medieval castle", 
+    "The Colosseum", "The Matrix", "Underwater city", "Abandoned mall", "A spaceship", "Venice"
+];
 
-        const competitions = [
-            "Dance Battle", "Try Not to Kiss Challenge", "Hunger Games", "Hot Dog Eating",
-            "Try Not to Cringe", "40-Yard Dash", "Solve the Rubik's Cube", "Wii Tennis",
-            "Mass Eating", "Who Would Make a More Viral Thirst Trap", "Survive a Zombie Apocalypse",
-            "Would Not Crack Under Interrogation", "Trivia", "Karaoke"
-        ];
+const competitions = [
+    "1v1 Mortal Kombat", "Kart Racing", "Cooking Competition", "Dance Battle", "Rap Battle", 
+    "Slap Fight", "Lawn Mower Racing", "Dog Sled Racing", "Tug of War", "Nerf Gun Fight", 
+    "Olympic Gymnastics", "Wrestling", "Rock Paper Scissors", "Paintball Battle", "Jenga", 
+    "Eating Contest", "Trivia Challenge", "Hot Dog Eating Contest", "Fashion Show", "Speedrun", 
+    "Fortnite Battle Royale", "Squid Game", "Minecraft Survival", "Cultural Dance Competition", 
+    "Water Balloon Fight", "Synchronized Swimming", "Slam Dunk Contest", "Spelling Bee", 
+    "Fart Contest", "Twerking Competition", "Minecraft Build Battle", "Competitive Lifting", 
+    "Obstacle Course", "Ice Cream Chug", "Laser Tag", "Escape Room", "Trivia Night", 
+    "Lip Sync Battle", "High Dive", "Board Game Marathon", "Sumo Wrestling", "Hackathon", 
+    "Staring Contest", "Shoe Stacking", "Riddle Solving", "Fortune Telling", "Tattoo Challenge", 
+    "Dodgeball", "Zumba Contest", "Most Twitter Followers", "Wii Fit Challenge", "Blindfolded Art", 
+    "Balloon Animal Making", "Street Fighting", "Fire Eating", "Poetry Slam", "Opera Singing", 
+    "Candle Making", "Chili Cook-Off"
+];
 
         // Initialize sets to track used cards
         let usedCharacters = new Set();
