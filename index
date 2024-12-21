@@ -88,15 +88,15 @@
 </style>
 </head>
 <body>
-<h1>Welcome to Gay Wars!</h1>
-<h2>Generate a random battle scenario!</h2>
+<h1>Welcome to Gay Wars</h1>
+<h2>generate a battle</h2>
 <div class="game-container">
     <div class="character-boxes">
-        <div id="character1-box" class="character-box">Character 1</div>
-        <div id="character2-box" class="character-box">Character 2</div>
+        <div id="character1-box" class="character-box">character 1</div>
+        <div id="character2-box" class="character-box">character 2</div>
     </div>
     <div id="middle-info" class="middle-info">
-        Environment and Competition will appear here.
+        environment and competition
     </div>
 </div>
 <button onclick="generateScenario()">Generate Scenario</button>
