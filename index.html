@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gay Wars</title>
     <style>
-        /* Smooth background color transition */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: #b2fefa; /* initial background */
+            background: linear-gradient(135deg, #ff7a8b, #f3a6b9, #f8e1d4);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
             color: #333;
             display: flex;
             flex-direction: column;
@@ -18,26 +19,20 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
-            transition: background-color 2s ease-in-out; /* Smooth transition for background color */
         }
-
-        /* Header and title styles */
+    
         h1 {
             color: #2a4d69;
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
-
+    
         h2 {
             color: #333;
             font-size: 1.8rem;
             margin-bottom: 30px;
-            text-align: center;
         }
-
-        /* Main game container */
+    
         .game-container {
             display: flex;
             flex-direction: column;
@@ -45,16 +40,14 @@
             justify-content: center;
             gap: 20px;
             width: 80%;
-            max-width: 1000px;
         }
-
-        /* Character boxes styles */
+    
         .character-boxes {
             display: flex;
             justify-content: space-around;
             width: 100%;
         }
-
+    
         .character-box {
             width: 40%;
             padding: 20px;
@@ -65,15 +58,14 @@
             text-align: center;
             font-size: 1.2rem;
             line-height: 1.6;
-            transition: transform 0.2s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
+    
         .character-box:hover {
             transform: scale(1.05);
-            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
         }
-
-        /* Middle info box styles */
+    
         .middle-info {
             padding: 20px;
             border: 2px solid #ff9a9e;
@@ -85,48 +77,37 @@
             line-height: 1.8;
             width: 60%;
         }
-
-        /* Button styling */
+    
         button {
             background-color: #0ed2f7;
             color: #ffffff;
-            padding: 12px 25px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            margin-top: 30px;
-            display: block;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
-
+    
         button:hover {
             background-color: #06b1d1;
-            transform: scale(1.05);
+            transform: scale(1.1);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
         }
-
-        /* Add responsiveness */
-        @media (max-width: 768px) {
-            .character-boxes {
-                flex-direction: column;
-                align-items: center;
+    
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
             }
-
-            .character-box {
-                width: 80%;
-                margin-bottom: 10px;
+            50% {
+                background-position: 100% 50%;
             }
-
-            .middle-info {
-                width: 80%;
-            }
-
-            button {
-                width: 80%;
-                padding: 15px;
+            100% {
+                background-position: 0% 50%;
             }
         }
-    </style>
+    </style>    
 </head>
 <body>
     <h1>Welcome to Gay Wars</h1>
