@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gay Wars</title>
     <style>
+        /* Smooth background color transition */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #b2fefa, #0ed2f7);
+            background: #b2fefa; /* initial background */
             color: #333;
             display: flex;
             flex-direction: column;
@@ -17,17 +18,26 @@
             justify-content: center;
             min-height: 100vh;
             overflow: hidden;
+            transition: background-color 2s ease-in-out; /* Smooth transition for background color */
         }
+
+        /* Header and title styles */
         h1 {
             color: #2a4d69;
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
         }
+
         h2 {
             color: #333;
             font-size: 1.8rem;
             margin-bottom: 30px;
+            text-align: center;
         }
+
+        /* Main game container */
         .game-container {
             display: flex;
             flex-direction: column;
@@ -35,12 +45,16 @@
             justify-content: center;
             gap: 20px;
             width: 80%;
+            max-width: 1000px;
         }
+
+        /* Character boxes styles */
         .character-boxes {
             display: flex;
             justify-content: space-around;
             width: 100%;
         }
+
         .character-box {
             width: 40%;
             padding: 20px;
@@ -51,7 +65,15 @@
             text-align: center;
             font-size: 1.2rem;
             line-height: 1.6;
+            transition: transform 0.2s ease-in-out;
         }
+
+        .character-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Middle info box styles */
         .middle-info {
             padding: 20px;
             border: 2px solid #ff9a9e;
@@ -63,37 +85,64 @@
             line-height: 1.8;
             width: 60%;
         }
+
+        /* Button styling */
         button {
             background-color: #0ed2f7;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 5px;
-            font-size: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
+            margin-top: 30px;
+            display: block;
         }
+
         button:hover {
             background-color: #06b1d1;
             transform: scale(1.05);
         }
+
+        /* Add responsiveness */
+        @media (max-width: 768px) {
+            .character-boxes {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .character-box {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+
+            .middle-info {
+                width: 80%;
+            }
+
+            button {
+                width: 80%;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-<h1>Welcome to Gay Wars</h1>
-<h2>Generate a Battle</h2>
-<div class="game-container">
-    <div class="character-boxes">
-        <div id="character1-box" class="character-box">Character 1</div>
-        <div id="character2-box" class="character-box">Character 2</div>
+    <h1>Welcome to Gay Wars</h1>
+    <h2>Generate a Battle</h2>
+    <div class="game-container">
+        <div class="character-boxes">
+            <div id="character1-box" class="character-box">Character 1</div>
+            <div id="character2-box" class="character-box">Character 2</div>
+        </div>
+        <div id="middle-info" class="middle-info">
+            Environment and Competition
+        </div>
     </div>
-    <div id="middle-info" class="middle-info">
-        Environment and Competition
-    </div>
-</div>
-<button onclick="generateScenario()">Generate Scenario</button>
+    <button onclick="generateScenario()">Generate Scenario</button>
 
-<script>
+    <script>
 // Arrays of game elements
 const characterCards = [
     "Mason", "Shunty", "Precious", "Uh...Matty", "Farnold", "Belb", "Hitler", "James Charles",
@@ -162,75 +211,29 @@ const competitions = [
     "Candle Making", "Chili Cook-Off"
 ];
 
-        // Initialize sets to track used cards
-        let usedCharacters = new Set();
-        let usedDescriptions = new Set();
-        let usedEnvironments = new Set();
-        let usedCompetitions = new Set();
-
-        // Function to reset the used cards if all have been used
-        function resetUsedCards() {
-            if (usedCharacters.size === characterCards.length) usedCharacters.clear();
-            if (usedDescriptions.size === descriptiveCards.length) usedDescriptions.clear();
-            if (usedEnvironments.size === environments.length) usedEnvironments.clear();
-            if (usedCompetitions.size === competitions.length) usedCompetitions.clear();
+// Function to generate a random index from an array
+function getRandomIndex(arr) {
+            return Math.floor(Math.random() * arr.length);
         }
 
-        // Function to get a random index and avoid duplicates
-        function getRandomItem(array, usedSet) {
-            resetUsedCards(); // Reset if all options are used
-
-            let randomIndex;
-            let item;
-
-            do {
-                randomIndex = Math.floor(Math.random() * array.length);
-                item = array[randomIndex];
-            } while (usedSet.has(item));
-
-            usedSet.add(item); // Mark as used
-            return item;
-        }
-
-        // Function to generate a random scenario ensuring no duplicate cards
+        // Function to generate a random scenario
         function generateScenario() {
-            // Get random character, description, environment, and competition
-            const character1 = getRandomItem(characterCards, usedCharacters);
-            const character2 = getRandomItem(characterCards, usedCharacters);
-            const description1 = getRandomItem(descriptiveCards, usedDescriptions);
-            const description2 = getRandomItem(descriptiveCards, usedDescriptions);
-            const environment = getRandomItem(environments, usedEnvironments);
-            const competition = getRandomItem(competitions, usedCompetitions);
+            const character1 = characterCards[getRandomIndex(characterCards)];
+            const character2 = characterCards[getRandomIndex(characterCards)];
+            const description1 = descriptiveCards[getRandomIndex(descriptiveCards)];
+            const description2 = descriptiveCards[getRandomIndex(descriptiveCards)];
+            const environment = environments[getRandomIndex(environments)];
+            const competition = competitions[getRandomIndex(competitions)];
 
-            // Make sure character1 is not the same as character2
-            if (character1 === character2) {
-                return generateScenario(); // Recursively call until different characters
-            }
-
-            // Update the HTML with the selected scenario
-            document.getElementById("character1-box").innerHTML = `${character1} (${description1})`;
-            document.getElementById("character2-box").innerHTML = `${character2} (${description2})`;
-            document.getElementById("middle-info").innerHTML = `Environment: ${environment}<br>Competition: ${competition}`;
-        }
-
-        // Floating particles animation
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.width = `${Math.random() * 10 + 5}px`;
-            particle.style.height = particle.style.width;
-            particle.style.top = `${Math.random() * 100}vh`;
-            particle.style.left = `${Math.random() * 100}vw`;
-            document.body.appendChild(particle);
+            // Display the results
+            document.getElementById("character1-box").innerText = `${character1} - ${description1}`;
+            document.getElementById("character2-box").innerText = `${character2} - ${description2}`;
+            document.getElementById("middle-info").innerText = `Environment: ${environment}\nCompetition: ${competition}`;
             
-            // Remove the particle after animation
-            setTimeout(() => {
-                particle.remove();
-            }, 10000); // Match duration of float animation
+            // Optionally, change background color smoothly
+            const newBackgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+            document.body.style.backgroundColor = newBackgroundColor;
         }
-
-        // Generate particles every 0.5 seconds
-        setInterval(createParticle, 500);
     </script>
 </body>
 </html>
